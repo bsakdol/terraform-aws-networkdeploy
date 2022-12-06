@@ -1,0 +1,61 @@
+# ------------------------------------------------------------------------------
+# AWS | TRANSIT GATEWAY | --> TGW owner account number
+# ------------------------------------------------------------------------------
+output "account_id" {
+  description = <<-EOT
+    AWS Account ID number of the account that owns or contains the calling entity.
+  EOT
+  value       = try(module.network_deployment.account_id, null)
+}
+
+# ------------------------------------------------------------------------------
+# AWS | TRANSIT GATEWAY | --> Transit Gateway IDs
+# ------------------------------------------------------------------------------
+{% for region in REGIONS -%}
+output "{{ region.description }}_transit_gateway_id" {
+  description = "EC2 Transit Gateway identifier."
+  value       = try(module.network_deployment.{{ region.description }}_transit_gateway_id, null)
+}
+
+{% endfor -%}
+# ------------------------------------------------------------------------------
+# AWS | TRANSIT GATEWAY | --> Regional route table IDs
+# ------------------------------------------------------------------------------
+{% for region in REGIONS %}
+# REGION: {{ region.description.upper() }} ({{ region.region.upper() }})
+# ------------------------------------------------------------------------------
+output "{{ region.description }}_production_route_table_id" {
+  description = "EC2 Transit Gateway Route Table identifier."
+  value       = try(module.network_deployment.{{ region.description }}_production_route_table_id, null)
+}
+
+output "{{ region.description }}_development_route_table_id" {
+  description = "EC2 Transit Gateway Route Table identifier."
+  value       = try(module.network_deployment.{{ region.description }}_development_route_table_id, null)
+}
+
+output "{{ region.description }}_uat_route_table_id" {
+  description = "EC2 Transit Gateway Route Table identifier."
+  value       = try(module.network_deployment.{{ region.description }}_uat_route_table_id, null)
+}
+
+output "{{ region.description }}_qa_route_table_id" {
+  description = "EC2 Transit Gateway Route Table identifier."
+  value       = try(module.network_deployment.{{ region.description }}_qa_route_table_id, null)
+}
+
+output "{{ region.description }}_shared_services_route_table_id" {
+  description = "EC2 Transit Gateway Route Table identifier."
+  value       = try(module.network_deployment.{{ region.description }}_shared_services_route_table_id, null)
+}
+
+output "{{ region.description }}_edge_route_table_id" {
+  description = "EC2 Transit Gateway Route Table identifier."
+  value       = try(module.network_deployment.{{ region.description }}_edge_route_table_id, null)
+}
+
+output "{{ region.description }}_inspection_route_table_id" {
+  description = "EC2 Transit Gateway Route Table identifier."
+  value       = try(module.network_deployment.{{ region.description }}_inspection_route_table_id, null)
+}
+{% endfor %}
