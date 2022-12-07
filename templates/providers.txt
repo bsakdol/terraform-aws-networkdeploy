@@ -6,9 +6,8 @@
 {% for provider in PROVIDERS %}
 provider "aws" {
   alias   = "{{ provider.description }}"
-  region  = "{{ provider.region }}"
-  {% if PROFILE -%}
+  region  = "{{ provider.region }}"{% if PROFILE %}
   profile = "{{ PROFILE }}"
-  {% endif -%}
+  {%- endif %}
 }
 {% endfor %}
